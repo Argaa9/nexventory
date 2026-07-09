@@ -65,6 +65,7 @@ Import database:
 nexventory.sql
 ```
 
+Setelah itu sesuaikan konfigurasi database pada file `.env`.
 ---
 
 ## 👤 Akun Pengujian

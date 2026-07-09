@@ -274,7 +274,7 @@ td{
 <!-- DATA PEMINJAMAN -->
 
 <div class="section-title">
-    2. Active Borrowings
+   2. Borrowing History
 </div>
 
 <table>

@@ -111,12 +111,9 @@ class ReportController extends Controller
         $products = Product::with('category')->get();
 
         // Data Peminjaman Aktif
-        $borrowings = Borrowing::with([
-    'user',
-    'product'
-])
-->orderBy('borrow_date', 'desc')
-->get();
+       $borrowings = Borrowing::with('details.product')
+    ->orderBy('borrow_date', 'desc')
+    ->get();
 
         // Barang Stok Menipis
         $lowStocks = Product::whereColumn(

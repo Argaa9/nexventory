@@ -300,12 +300,18 @@ td{
         <tr>
 
             <td>
-                {{ optional($borrow->user)->name ?? '-' }}
-            </td>
+    {{ $borrow->borrower_name }}
+</td>
 
             <td>
-                {{ optional($borrow->product)->product_name ?? '-' }}
-            </td>
+
+@foreach($borrow->details as $detail)
+
+    • {{ $detail->product->product_name ?? '-' }}<br>
+
+@endforeach
+
+</td>
 
             <td>
                 {{ $borrow->borrow_date }}

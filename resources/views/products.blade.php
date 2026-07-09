@@ -152,14 +152,10 @@
 
 @if($product->image)
 
-    <a href="{{ asset('storage/'.$product->image) }}"
-       target="_blank">
-
-        <img
-            src="{{ asset('storage/'.$product->image) }}"
-            class="w-16 h-16 rounded-xl object-cover cursor-pointer hover:scale-110 transition">
-
-    </a>
+    <a href="{{ asset('images/'.$product->image) }}" target="_blank">
+    <img src="{{ asset('images/'.$product->image) }}"
+         class="w-16 h-16 rounded-xl object-cover cursor-pointer hover:scale-110 transition">
+</a>
 
 @else
 

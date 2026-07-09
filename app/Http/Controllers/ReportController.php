@@ -61,7 +61,7 @@ class ReportController extends Controller
             ->take(10)
             ->get();
 
-        // Grafik peminjaman per bulan
+        // Grafik
 
         $grafikPeminjaman = Borrowing::select(
                 DB::raw('MONTH(borrow_date) as bulan'),
@@ -91,15 +91,57 @@ class ReportController extends Controller
 
     public function exportPdf()
     {
-        $products = Product::all();
+        // Statistik
+        $totalBarang = Product::count();
+
+        $totalKategori = Category::count();
+
+        $totalDipinjam = Borrowing::where(
+            'status',
+            'Dipinjam'
+        )->count();
+
+        $stokMenipis = Product::whereColumn(
+            'stock',
+            '<=',
+            'minimum_stock'
+        )->count();
+
+        // Data Barang
+        $products = Product::with('category')->get();
+
+        // Data Peminjaman Aktif
+        $borrowings = Borrowing::with([
+                'user',
+                'product'
+            ])
+            ->where('status', 'Dipinjam')
+            ->get();
+
+        // Barang Stok Menipis
+        $lowStocks = Product::whereColumn(
+            'stock',
+            '<=',
+            'minimum_stock'
+        )->get();
 
         $pdf = Pdf::loadView(
             'pdf.inventory-report',
-            compact('products')
+            compact(
+                'totalBarang',
+                'totalKategori',
+                'totalDipinjam',
+                'stokMenipis',
+                'products',
+                'borrowings',
+                'lowStocks'
+            )
         );
 
+        $pdf->setPaper('a4', 'portrait');
+
         return $pdf->download(
-            'laporan-inventaris.pdf'
+            'Inventory_Report.pdf'
         );
     }
 
@@ -120,16 +162,18 @@ class ReportController extends Controller
             fputcsv($file, [
                 'Kode Barang',
                 'Nama Barang',
+                'Kategori',
                 'Stok',
                 'Lokasi',
                 'Status'
             ]);
 
-            foreach (Product::all() as $product)
+            foreach (Product::with('category')->get() as $product)
             {
                 fputcsv($file, [
                     $product->product_code,
                     $product->product_name,
+                    optional($product->category)->name,
                     $product->stock,
                     $product->location,
                     $product->status

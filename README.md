@@ -1,6 +1,6 @@
 # 📦 Nexventory
 
-> Sistem Informasi Manajemen Inventaris berbasis web yang saya bangun secara mandiri dari nol dalam waktu kurang lebih satu minggu menggunakan Laravel.
+> Sistem Informasi Manajemen Inventaris berbasis web yang dilengkapi dengan fitur manajemen data barang, transaksi dan riwayat peminjaman, monitoring stok menipis, dashboard, manajemen pengguna berbasis role (Admin, Manager, dan Staff), serta ekspor laporan PDF dan Excel.
 
 ## 🌐 Demo
 
